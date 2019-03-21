@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ (C) Copyright 2010- 2019 hSenid Mobile Solutions (Pvt) Limited.
+  ~ All Rights Reserved.
+  ~
+  ~ These materials are unpublished, proprietary, confidential source code of
+  ~ hSenid Mobile Solutions (Pvt) Limited and constitute a TRADE SECRET
+  ~ of hSenid Mobile Solutions (Pvt) Limited.
+  ~
+  ~ hSenid Mobile Solutions (Pvt) Limited retains all title to and intellectual
+  ~ property rights in these materials.
+  -->
+
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS} %-5level %thread %logger{1} [%X{trxId}] %msg %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="error-appender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/hms/logs/reservation/reservation-api-server-error.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/hms/logs/reservation/reservation-api-server-error.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS} %-5level %thread %logger{1} [%X{trxId}] %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debug-appender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/hms/logs/reservation/reservation-api-server-debug.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/hms/logs/reservation/reservation-api-server-debug.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS} %-5level %thread %logger{1} [%X{trxId}] %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="info-appender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/hms/logs/reservation/reservation-api-server-info.log</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/hms/logs/reservation/reservation-api-server-info.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS} %-5level %thread %logger{1} [%X{trxId}] %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="framework-logs-appender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/hms/logs/reservation/reservation-api-server-framework.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/hms/logs/reservation/reservation-api-server-framework.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS} %-5level %thread %logger{1} [%X{trxId}] %msg %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="audit-log-appender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/hms/logs/reservation/reservation-api-server-auditlog.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/hms/logs/reservation/reservation-api-server-auditlog.%d{yyyy-MM-dd_HH}.log
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy:MM:dd HH:mm:ss:SSS}|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.hibernate" level="ERROR" additivity="true">
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+    </logger>
+
+    <logger name="org.springframework" level="ERROR" additivity="true">
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+    </logger>
+
+    <logger name="USER_AUDIT_LOG" level="TRACE" additivity="true">
+        <appender-ref ref="audit-log-appender"/>
+    </logger>
+
+    <logger name="hms" level="TRACE" additivity="true">
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+    </logger>
+
+    <logger name="STAT_LOGGER" level="TRACE" additivity="true">
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+    </logger>
+
+    <logger name="CustomErrorTranslator" level="ERROR" additivity="true">
+        <appender-ref ref="error-appender"/>
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="framework-logs-appender"/>
+    </root>
+</configuration>
