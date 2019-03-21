@@ -30,7 +30,7 @@ public class PackageDetailController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public PackageDetail updateById(@PathVariable(name = "id") long id, @RequestBody PackageDetail packageDetail) {
-        return packageDetailService.update(packageDetail);
+        return packageDetailService.update(id, packageDetail);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

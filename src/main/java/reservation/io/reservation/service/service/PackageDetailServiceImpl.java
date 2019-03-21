@@ -26,7 +26,8 @@ public class PackageDetailServiceImpl implements PackageDetailService {
     }
 
     @Override
-    public PackageDetail update(PackageDetail packageDetail) {
+    public PackageDetail update(long id, PackageDetail packageDetail) {
+        packageDetail.setId(id);
         return repository.save(packageDetail);
     }
 
